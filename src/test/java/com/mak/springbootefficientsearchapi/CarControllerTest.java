@@ -35,7 +35,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 @ExtendWith(MockitoExtension.class)
 public class CarControllerTest {
 
@@ -56,7 +55,7 @@ public class CarControllerTest {
     @BeforeEach
     public void setup() {
         car = Builder.car(1, "WALLYS", "IRIS", "Small", "Tunisia", LocalDate.of(2006, 8, 29));
-        vehicle = Builder.vehicle( "WALLYS", "IRIS", "Small", "Tunisia", LocalDate.of(2006, 8, 29));
+        vehicle = Builder.vehicle("WALLYS", "IRIS", "Small", "Tunisia", LocalDate.of(2006, 8, 29));
         mockMvc = MockMvcBuilders.standaloneSetup(carController).build();
     }
 
@@ -69,21 +68,22 @@ public class CarControllerTest {
     @Test
     void testUploadFile() throws Exception {
         // Create a list of MultipartFiles
-        MockMultipartFile file1 = new MockMultipartFile("files", "file1.csv", MediaType.TEXT_PLAIN_VALUE, "file1".getBytes());
+        MockMultipartFile file1 = new MockMultipartFile("files", "file1.csv", MediaType.TEXT_PLAIN_VALUE,
+                "file1".getBytes());
 
         // Create a list of Car objects
         List<Car> cars = Arrays.asList(
                 new Car(1, "Toyota", "Corolla", "Japan", "Sedan", LocalDate.of(2020, 1, 1)),
                 new Car(2, "Honda", "Civic", "Japan", "Sedan", LocalDate.of(2019, 6, 1)),
-                new Car(3, "Tesla", "Model 3", "USA", "Sedan", LocalDate.of(2021, 3, 1))
-        );
+                new Car(3, "Tesla", "Model 3", "USA", "Sedan", LocalDate.of(2021, 3, 1)));
 
-        // Mock the car service to return the list of Car objects when uploadFile is called
+        // Mock the car service to return the list of Car objects when uploadFile is
+        // called
         when(carService.uploadFile(any(MultipartFile.class))).thenReturn(cars);
 
         // Send a POST request to the API with the list of MultipartFiles as a parameter
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.multipart("/api/cars/upload")
-                        .file(file1))
+                .file(file1))
                 .andExpect(status().isCreated())
                 .andReturn();
 
@@ -110,7 +110,6 @@ public class CarControllerTest {
         verify(carService, times(1)).create(any());
     }
 
-
     @Test
     void GetMappingOfCar() throws Exception {
         when(carService.get(any())).thenReturn(car);
@@ -123,13 +122,10 @@ public class CarControllerTest {
         verify(carService, times(1)).get(any());
     }
 
-
     @Test
     void DeleteMappingOfCar() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/cars/1").
-                        contentType(MediaType.APPLICATION_JSON).
-                        content(asJsonString(car))).
-                andExpect(status().isNoContent());
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/cars/1").contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(car))).andExpect(status().isNoContent());
 
         verify(carService, times(1)).delete(any());
     }

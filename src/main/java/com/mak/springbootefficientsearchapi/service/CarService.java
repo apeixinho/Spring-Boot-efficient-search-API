@@ -39,7 +39,8 @@ public class CarService extends GenericCsv<Car> {
      */
     public void delete(Integer id) {
         Car entity = carRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("Can not find the entity car (%s = %s).", "id", id)));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        String.format("Can not find the entity car (%s = %s).", "id", id)));
         carRepository.delete(entity);
     }
 
@@ -50,13 +51,14 @@ public class CarService extends GenericCsv<Car> {
      */
     public Car get(Integer id) {
         return carRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("Can not find the entity car (%s = %s).", "id", id)));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        String.format("Can not find the entity car (%s = %s).", "id", id)));
     }
 
     /**
      * get element using Criteria.
      *
-     * @param spec    *
+     * @param spec *
      * @param headers pagination data
      * @param sort    sort criteria
      * @return retrieve elements with pagination
@@ -71,7 +73,8 @@ public class CarService extends GenericCsv<Car> {
     }
 
     private boolean isRequestPaged(HttpHeaders headers) {
-        return headers.containsKey(PagingHeaders.PAGE_NUMBER.getName()) && headers.containsKey(PagingHeaders.PAGE_SIZE.getName());
+        return headers.containsKey(PagingHeaders.PAGE_NUMBER.getName())
+                && headers.containsKey(PagingHeaders.PAGE_SIZE.getName());
     }
 
     private Pageable buildPageRequest(HttpHeaders headers, Sort sort) {
@@ -83,14 +86,15 @@ public class CarService extends GenericCsv<Car> {
     /**
      * get elements using Criteria.
      *
-     * @param spec     *
+     * @param spec *
      * @param pageable pagination data
      * @return retrieve elements with pagination
      */
     public PagingResponse get(Specification<Car> spec, Pageable pageable) {
         Page<Car> page = carRepository.findAll(spec, pageable);
         List<Car> content = page.getContent();
-        return new PagingResponse(page.getTotalElements(), (long) page.getNumber(), (long) page.getNumberOfElements(), pageable.getOffset(), (long) page.getTotalPages(), content);
+        return new PagingResponse(page.getTotalElements(), (long) page.getNumber(), (long) page.getNumberOfElements(),
+                pageable.getOffset(), (long) page.getTotalPages(), content);
     }
 
     /**
@@ -126,7 +130,7 @@ public class CarService extends GenericCsv<Car> {
                 .map(carFound -> {
                     item.setId(id);
                     return save(item);
-                }).orElseThrow(()-> new EntityNotFoundException("Can not update entity, entity without ID."));
+                }).orElseThrow(() -> new EntityNotFoundException("Can not update entity, entity without ID."));
     }
 
     /**
@@ -138,7 +142,6 @@ public class CarService extends GenericCsv<Car> {
     protected Car save(Car item) {
         return carRepository.save(item);
     }
-
 
     @Async
     public List<Car> uploadFile(MultipartFile multipartFile) throws IOException {

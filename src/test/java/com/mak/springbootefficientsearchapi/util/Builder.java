@@ -7,7 +7,8 @@ import java.time.LocalDate;
 
 public class Builder {
 
-    public static Car car(Integer id, String manufacturer, String model, String type, String country, LocalDate createDate) {
+    public static Car car(Integer id, String manufacturer, String model, String type, String country,
+            LocalDate createDate) {
         Car car = new Car();
         car.setId(id);
         car.setManufacturer(manufacturer);
@@ -17,7 +18,9 @@ public class Builder {
         car.setCreateDate(createDate);
         return car;
     }
-    public static Vehicle vehicle(String manufacturer, String model, String type, String country, LocalDate createDate) {
+
+    public static Vehicle vehicle(String manufacturer, String model, String type, String country,
+            LocalDate createDate) {
         Vehicle vehicle = new Vehicle();
         vehicle.setManufacturer(manufacturer);
         vehicle.setModel(model);

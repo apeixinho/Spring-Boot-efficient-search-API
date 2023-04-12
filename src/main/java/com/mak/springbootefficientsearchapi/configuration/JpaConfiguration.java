@@ -18,4 +18,3 @@ public class JpaConfiguration implements WebMvcConfigurer {
     }
 
 }
-

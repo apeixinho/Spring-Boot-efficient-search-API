@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 
 import static com.pivovarit.function.ThrowingFunction.unchecked;
 
-
 // @Slf4j
 @RestController
 @RequestMapping("/api/cars")
@@ -87,7 +86,7 @@ public class CarController {
                     @Spec(path = "country", params = "country", spec = In.class),
                     @Spec(path = "type", params = "type", spec = Like.class),
                     @Spec(path = "createDate", params = "createDate", spec = Equal.class),
-                    @Spec(path = "createDate", params = {"createDateGt", "createDateLt"}, spec = Between.class)
+                    @Spec(path = "createDate", params = { "createDateGt", "createDateLt" }, spec = Between.class)
             }) Specification<Car> spec,
             Sort sort,
             @RequestHeader HttpHeaders headers) {
@@ -106,7 +105,7 @@ public class CarController {
     }
 
     @ResponseBody
-    @PostMapping(value = "/upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/upload", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<List<Car>> uploadFile(@RequestParam(value = "files") List<MultipartFile> files) {
         List<Car> cars = files.stream()
                 .parallel()
@@ -117,7 +116,7 @@ public class CarController {
                 .body(cars);
     }
 
-    @GetMapping(value = "/extract", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
+    @GetMapping(value = "/extract", produces = { MediaType.APPLICATION_OCTET_STREAM_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Resource> extractFile(
             @And({
@@ -126,7 +125,7 @@ public class CarController {
                     @Spec(path = "country", params = "country", spec = In.class),
                     @Spec(path = "type", params = "type", spec = Like.class),
                     @Spec(path = "createDate", params = "createDate", spec = Equal.class),
-                    @Spec(path = "createDate", params = {"createDateGt", "createDateLt"}, spec = Between.class)
+                    @Spec(path = "createDate", params = { "createDateGt", "createDateLt" }, spec = Between.class)
             }) Specification<Car> spec,
             Sort sort) throws IOException {
         List<Car> cars = carService.get(spec, sort);
@@ -138,6 +137,5 @@ public class CarController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Search_Extraction_" + now + ".csv\"")
                 .body(resource);
     }
-
 
 }

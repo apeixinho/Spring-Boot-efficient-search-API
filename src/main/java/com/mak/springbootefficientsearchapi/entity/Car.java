@@ -1,6 +1,5 @@
 package com.mak.springbootefficientsearchapi.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,22 +20,17 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
     @Column(nullable = false)
     private String manufacturer;
-
 
     @Column(nullable = false)
     private String model;
 
-
     @Column(nullable = false)
     private String type;
 
-
     @Column(nullable = false)
     private String country;
-
 
     @Column(nullable = false)
     private LocalDate createDate;

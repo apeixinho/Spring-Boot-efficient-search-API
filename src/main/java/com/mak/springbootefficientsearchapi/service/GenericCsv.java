@@ -38,9 +38,9 @@ public abstract class GenericCsv<T> {
         return this.clazz;
     }
 
-
     public List<T> parseCsvFile(MultipartFile multipartFile) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(multipartFile.getInputStream(), StandardCharsets.UTF_8));
+        BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(multipartFile.getInputStream(), StandardCharsets.UTF_8));
 
         List<String> header = Arrays.asList(bufferedReader.readLine().split(CELL_SEPARATOR));
         Map<String, Method> setMap = setterMethodsMap();
@@ -59,7 +59,8 @@ public abstract class GenericCsv<T> {
                 .collect(Collectors.toList());
     }
 
-    private T createCar(Map<String, String> mapEntity, Map<String, Method> setMap) throws InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
+    private T createCar(Map<String, String> mapEntity, Map<String, Method> setMap)
+            throws InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
         T t = instantiateObject(this.clazz);
         for (Map.Entry<String, String> entry : mapEntity.entrySet()) {
             String k = entry.getKey();
@@ -89,11 +90,10 @@ public abstract class GenericCsv<T> {
         return StringUtils.uncapitalize(method.getName().substring(3));
     }
 
-
-    public T instantiateObject(Class<T> clazz) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        return clazz.getDeclaredConstructor().newInstance();  // use reflection to create instance
+    public T instantiateObject(Class<T> clazz)
+            throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        return clazz.getDeclaredConstructor().newInstance(); // use reflection to create instance
     }
-
 
     public Resource generateCsvFile(List<T> clazz) throws IOException {
         List<String> noNeededColumn = new ArrayList<>();
@@ -112,14 +112,12 @@ public abstract class GenericCsv<T> {
         return (new InputStreamResource(new ByteArrayInputStream(st.toString().getBytes(StandardCharsets.UTF_8))));
     }
 
-
     private Map<String, Object> buildMapLine(List<Method> methods, T line) {
         return methods.stream()
                 .parallel()
                 .collect(Collectors.toMap(this::getColumnName,
                         unchecked(method -> line.getClass().getMethod(method.getName()).invoke(line))));
     }
-
 
     private List<Method> getMethodsList(List<T> clazz, List<String> noNeededColumn) {
         return Arrays.stream(clazz.get(0).getClass().getMethods())
