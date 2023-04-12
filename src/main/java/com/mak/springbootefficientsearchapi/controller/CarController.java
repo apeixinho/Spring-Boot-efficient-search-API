@@ -5,7 +5,6 @@ import com.mak.springbootefficientsearchapi.entity.utils.PagingHeaders;
 import com.mak.springbootefficientsearchapi.entity.utils.PagingResponse;
 import com.mak.springbootefficientsearchapi.model.Vehicle;
 import com.mak.springbootefficientsearchapi.service.CarService;
-import lombok.extern.slf4j.Slf4j;
 import net.kaczmarzyk.spring.data.jpa.domain.Between;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.In;
@@ -13,7 +12,6 @@ import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -34,7 +32,7 @@ import java.util.stream.Collectors;
 import static com.pivovarit.function.ThrowingFunction.unchecked;
 
 
-@Slf4j
+// @Slf4j
 @RestController
 @RequestMapping("/api/cars")
 public class CarController {
@@ -43,7 +41,7 @@ public class CarController {
 
     private final ModelMapper modelMapper;
 
-    @Autowired
+    // @Autowired
     public CarController(CarService carService, ModelMapper modelMapper) {
         this.carService = carService;
         this.modelMapper = modelMapper;
