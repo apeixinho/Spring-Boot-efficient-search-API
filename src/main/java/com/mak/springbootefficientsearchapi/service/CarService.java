@@ -4,8 +4,6 @@ import com.mak.springbootefficientsearchapi.entity.Car;
 import com.mak.springbootefficientsearchapi.entity.utils.PagingHeaders;
 import com.mak.springbootefficientsearchapi.entity.utils.PagingResponse;
 import com.mak.springbootefficientsearchapi.repository.CarRepository;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,12 +20,12 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-@Slf4j
+// @Slf4j
 public class CarService extends GenericCsv<Car> {
 
     private final CarRepository carRepository;
 
-    @Autowired
+    // @Autowired
     public CarService(CarRepository carRepository) {
         super(Car.class);
         this.carRepository = carRepository;

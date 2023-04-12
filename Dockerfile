@@ -1,7 +1,7 @@
 #
 # Build stage
 #
-FROM maven:3.6.0-jdk-11-slim AS MAVEN_BUILD
+FROM maven:3-jdk-11-slim AS MAVEN_BUILD
 COPY pom.xml /build/
 COPY src /build/src/
 WORKDIR /build/
@@ -11,7 +11,7 @@ RUN mvn -f /build/pom.xml clean package
 # Package stage
 #
 # base image to build a JRE
-FROM amazoncorretto:17.0.3-alpine as corretto-jdk
+FROM amazoncorretto:17-alpine as corretto-jdk
 
 # required for strip-debug to work
 RUN apk add --no-cache binutils
